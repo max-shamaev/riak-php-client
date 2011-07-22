@@ -9,7 +9,6 @@
  * @license Apache License 2.0 http://www.apache.org/licenses/LICENSE-2.0
  * @version $id$
  * @link    http://www.basho.com/
- * @see     ____file_see____
  * @since   1.0.0
  */
 
@@ -20,7 +19,6 @@ namespace Riak;
  * Riak. The Riak API uses HTTP, so there is no persistent
  * connection, and the RiakClient object is extremely lightweight.
  * 
- * @see   ____class_see____
  * @since 1.0.0
  */
 class Client
@@ -29,7 +27,6 @@ class Client
      * Hostname or IP address
      * 
      * @var   string
-     * @see   ____var_see____
      * @since 1.0.0
      */
     protected $host;
@@ -38,7 +35,6 @@ class Client
      * Port number
      * 
      * @var   integer
-     * @see   ____var_see____
      * @since 1.0.0
      */
     protected $port;
@@ -47,7 +43,6 @@ class Client
      * Interface prefix
      * 
      * @var   string
-     * @see   ____var_see____
      * @since 1.0.0
      */
     protected $prefix;
@@ -56,7 +51,6 @@ class Client
      * MapReduce prefix
      * 
      * @var   string
-     * @see   ____var_see____
      * @since 1.0.0
      */
     protected $mapredPrefix;
@@ -65,7 +59,6 @@ class Client
      * Client ID 
      * 
      * @var   string
-     * @see   ____var_see____
      * @since 1.0.0
      */
     protected $clientid;
@@ -74,7 +67,6 @@ class Client
      * R-value setting for this RiakClient
      * 
      * @var   integer
-     * @see   ____var_see____
      * @since 1.0.0
      */
     protected $r = 2;
@@ -83,7 +75,6 @@ class Client
      * W-value setting for this RiakClient
      * 
      * @var   integer
-     * @see   ____var_see____
      * @since 1.0.0
      */
     protected $w = 2;
@@ -92,7 +83,6 @@ class Client
      * DW-value for this ClientOBject
      * 
      * @var   integer
-     * @see   ____var_see____
      * @since 1.0.0
      */
     protected $dw = 2;
@@ -106,7 +96,6 @@ class Client
      * @param string  $mapredPrefix MapReduce prefix (default "mapred") OPTIONAL
      *  
      * @return void
-     * @see    ____func_see____
      * @since  1.0.0
      */
     public function __construct($host = '127.0.0.1', $port = 8098, $prefix = 'riak', $mapredPrefix = 'mapred')
@@ -124,7 +113,6 @@ class Client
      * Get the R-value setting for this RiakClient.
      * 
      * @return integer
-     * @see    ____func_see____
      * @since  1.0.0
      */
     public function getR()
@@ -141,7 +129,6 @@ class Client
      * @param integer $r The R value
      *  
      * @return \Riak\Client
-     * @see    ____func_see____
      * @since  1.0.0
      */
     public function setR($r)
@@ -155,7 +142,6 @@ class Client
      * Get the W-value setting for this RiakClient
      * 
      * @return integer
-     * @see    ____func_see____
      * @since  1.0.0
      */
     public function getW()
@@ -170,7 +156,6 @@ class Client
      * @param integer $w The W value
      *  
      * @return \Riak\Client
-     * @see    ____func_see____
      * @since  1.0.0
      */
     public function setW($w)
@@ -184,7 +169,6 @@ class Client
      * Get the DW-value for this ClientOBject
      * 
      * @return integer
-     * @see    ____func_see____
      * @since  1.0.0
      */
     public function getDW()
@@ -199,7 +183,6 @@ class Client
      * @param integer $dw The DW value
      *  
      * @return \Riak\Client
-     * @see    ____func_see____
      * @since  1.0.0
      */
     public function setDW($dw)
@@ -213,7 +196,6 @@ class Client
      * Get the clientID for this RiakClient.
      * 
      * @return string
-     * @see    ____func_see____
      * @since  1.0.0
      */
     public function getClientID()
@@ -228,7 +210,6 @@ class Client
      * @param string $clientid The new clientID
      *  
      * @return \Riak\Client
-     * @see    ____func_see____
      * @since  1.0.0
      */
     public function setClientID($clientid)
@@ -248,7 +229,6 @@ class Client
      * @param string $name Bucket name
      *  
      * @return \Riak\Bucket
-     * @see    ____func_see____
      * @since  1.0.0
      */
     public function bucket($name)
@@ -260,7 +240,6 @@ class Client
      * Get all buckets
      * 
      * @return array(\Riak\Bucket)
-     * @see    ____func_see____
      * @since  1.0.0
      */
     public function buckets()
@@ -282,7 +261,6 @@ class Client
      * Check if the Riak server for this RiakClient is alive.
      * 
      * @return boolea
-     * @see    ____func_see____
      * @since  1.0.0
      */
     public function isAlive()
@@ -300,7 +278,6 @@ class Client
      * Start assembling a Map/Reduce operation.
      * 
      * @return \Riak\MapReduce
-     * @see    ____func_see____
      * @since  1.0.0
      */
     public function add()
@@ -316,7 +293,6 @@ class Client
      * return an error unless executed against a Riak Search cluster.
      * 
      * @return \Riak\MapReduce
-     * @see    ____func_see____
      * @since  1.0.0
      */
     public function search()
@@ -331,7 +307,6 @@ class Client
      * Start assembling a Map/Reduce operation.
      * 
      * @return \Riak\MapReduce
-     * @see    ____func_see____
      * @since  1.0.0
      */
     public function link()
@@ -346,7 +321,6 @@ class Client
      * Start assembling a Map/Reduce operation.
      *
      * @return \Riak\MapReduce
-     * @see    ____func_see____
      * @since  1.0.0
      */
     public function map()
@@ -361,7 +335,6 @@ class Client
      * Start assembling a Map/Reduce operation.
      *
      * @return \Riak\MapReduce
-     * @see    ____func_see____
      * @since  1.0.0
      */
     public function reduce()
