@@ -137,7 +137,7 @@ class MapReduce
      */
     public function link($bucket = '_', $tag = '_', $keep = false)
     {
-        $this->phases[] = new \Riak\LinkPhase($bucket, $tag, $keep);
+        $this->phases[] = new \Riak\Link\Phase($bucket, $tag, $keep);
 
         return $this;
     }
@@ -154,7 +154,7 @@ class MapReduce
     public function map($function, array $options = array())
     {
         $language = is_array($function) ? 'erlang' : 'javascript';
-        $this->phases[] = new \Riak\MapReducePhase(
+        $this->phases[] = new \Riak\MapReduce\Phase(
             'map',
             $function,
             \Riak\Utils::get_value('language', $options, $language),
@@ -177,7 +177,7 @@ class MapReduce
     public function reduce($function, array $options = array())
     {
         $language = is_array($function) ? 'erlang' : 'javascript';
-        $this->phases[] = new \Riak\MapReducePhase(
+        $this->phases[] = new \Riak\MapReduce\Phase(
             'reduce',
             $function,
             \Riak\Utils::get_value('language', $options, $language),
@@ -271,7 +271,7 @@ class MapReduce
 
     /**
      * Run the map/reduce operation. Returns an array of results, or an
-     * array of RiakLink objects if the last phase is a link phase.
+     * array of \Riak\Link objects if the last phase is a link phase.
      * 
      * @param integer $timeout Timeout in seconds OPTIONAL
      *  
@@ -333,11 +333,11 @@ class MapReduce
         $result = json_decode($response[1]);
 
         // If the last phase is NOT a link phase, then return the result.
-        $linkResultsFlag |= (end($this->phases) instanceof \Riak\LinkPhase);
+        $linkResultsFlag |= (end($this->phases) instanceof \Riak\Link\Phase);
 
         if ($linkResultsFlag) {
 
-            // If the last phase IS a link phase, then convert the results to RiakLink objects.
+            // If the last phase IS a link phase, then convert the results to \Riak\Link objects.
             $a = array();
             foreach ($result as $r) {
                 $tag = isset($r[2]) ? $r[2] : null;
