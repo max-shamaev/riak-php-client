@@ -157,9 +157,9 @@ class MapReduce
         $this->phases[] = new \Riak\MapReduce\Phase(
             'map',
             $function,
-            \Riak\Utils::get_value('language', $options, $language),
-            \Riak\Utils::get_value('keep', $options, false),
-            \Riak\Utils::get_value('arg', $options, null)
+            \Riak\Utils::getValue('language', $options, $language),
+            \Riak\Utils::getValue('keep', $options, false),
+            \Riak\Utils::getValue('arg', $options, null)
         );
 
         return $this;
@@ -180,9 +180,9 @@ class MapReduce
         $this->phases[] = new \Riak\MapReduce\Phase(
             'reduce',
             $function,
-            \Riak\Utils::get_value('language', $options, $language),
-            \Riak\Utils::get_value('keep', $options, false),
-            \Riak\Utils::get_value('arg', $options, null)
+            \Riak\Utils::getValue('language', $options, $language),
+            \Riak\Utils::getValue('keep', $options, false),
+            \Riak\Utils::getValue('arg', $options, null)
         );
 
         return $this;
@@ -302,14 +302,14 @@ class MapReduce
         for ($i = 0; $i < $numPhases; $i++) {
             $phase = $this->phases[$i];
             if ($i == ($numPhases - 1) && !$keepFlag) {
-                $phase->keep = true;
+                $phase->setKeep(true);
             }
 
-            if ($phase->keep) {
+            if ($phase->getKeep()) {
                 $keepFlag = true;
             }
 
-            $query[] = $phase->to_array();
+            $query[] = $phase->toArray();
         }
 
         // Add key filters if applicable
@@ -328,7 +328,7 @@ class MapReduce
         $content = json_encode($job);
 
         // Do the request...
-        $url = 'http://' . $this->client->host . ':' . $this->client->port . '/' . $this->client->mapred_prefix;
+        $url = 'http://' . $this->client->getHost() . ':' . $this->client->getPort() . '/' . $this->client->getMapredPrefix();
         $response = \Riak\Utils::httpRequest('POST', $url, array(), $content);
         $result = json_decode($response[1]);
 

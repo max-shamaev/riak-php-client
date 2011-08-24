@@ -140,6 +140,17 @@ class Client
         return $this->prefix;
     }
 
+    /**
+     * Get Map/Reduce prefix
+     * 
+     * @return string
+     * @since  1.0.0
+     */
+    public function getMapredPrefix()
+    {
+        return $this->mapredPrefix;
+    }
+
     // {{{ Service properties getters / setters
 
     /**
@@ -316,7 +327,7 @@ class Client
     public function add()
     {
         return call_user_func_array(
-            array(new \Riak\MapReduce($this), __METHOD__),
+            array(new \Riak\MapReduce($this), __FUNCTION__),
             func_get_args()
         );
     }
@@ -331,7 +342,7 @@ class Client
     public function search()
     {
         return call_user_func_array(
-            array(new \Riak\MapReduce($this), __METHOD__),
+            array(new \Riak\MapReduce($this), __FUNCTION__),
             func_get_args()
         );
     }
@@ -345,7 +356,7 @@ class Client
     public function link()
     {
         return call_user_func_array(
-            array(new \Riak\MapReduce($this), __METHOD__),
+            array(new \Riak\MapReduce($this), __FUNCTION__),
             func_get_args()
         );
     }
@@ -359,7 +370,7 @@ class Client
     public function map()
     {
         return call_user_func_array(
-            array(new \Riak\MapReduce($this), __METHOD__),
+            array(new \Riak\MapReduce($this), __FUNCTION__),
             func_get_args()
         );
     }
@@ -373,7 +384,7 @@ class Client
     public function reduce()
     {
         return call_user_func_array(
-            array(new \Riak\MapReduce($this), __METHOD__),
+            array(new \Riak\MapReduce($this), __FUNCTION__),
             func_get_args()
         );
     }

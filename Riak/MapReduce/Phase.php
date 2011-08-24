@@ -84,6 +84,29 @@ class Phase
     }
 
     /**
+     * Get 'keep' flag
+     * 
+     * @return boolean
+     * @since  1.0.0
+     */
+    public function getKeep()
+    {
+        return $this->keep;
+    }
+
+    /**
+     * Set 'keep' flag
+     * 
+     * @param boolean $keep Keep flag value
+     *  
+     * @return void
+     * @since  1.0.0
+     */
+    public function setKeep($keep)
+    {
+        $this->keep = $keep;
+    }
+    /**
      * Convert the object to an associative array. Used internally
      * 
      * @return array

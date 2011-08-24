@@ -122,5 +122,91 @@ class UseCasesTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(2, $bucket->getNVal(), 'check new NVal');
     }
 
+    public function testSiblings()
+    {
+        # Set up the bucket, clear any existing object...
+        $client = new \Riak\Client(HOST, PORT);
+        $bucket = $client->bucket('multiBucket');
+        $bucket->setAllowMultiples('true');
+        $obj = $bucket->get('foo');
+        $obj->delete();
+
+        # Store the same object multiple times...
+        for ($i = 0; $i < 5; $i++) {
+            $client = new \Riak\Client(HOST, PORT);
+            $bucket = $client->bucket('multiBucket');
+            $obj = $bucket->newObject('foo', rand());
+            $obj->store();
+        }
+
+        # Make sure the object has 5 siblings...
+        $this->assertTrue($obj->hasSiblings(), 'check hasSiblings flag');
+        $this->assertEquals(5, $obj->getSiblingCount(), 'check siblings count');
+
+        # Test getSibling()/getSiblings()...
+        $siblings = $obj->getSiblings();
+        $obj3 = $obj->getSibling(3);
+        $this->assertEquals($siblings[3]->getData(), $obj3->getData(), 'check equal data');
+
+        # Resolve the conflict, and then do a get...
+        $obj3 = $obj->getSibling(3);
+        $obj3->store();
+        $obj->reload();
+        $this->assertEquals($obj->getData(), $obj3->getData(), 'check equal data after update');
+
+        # Clean up for next test...
+        $obj->delete();
+    }
+
+    public function testJavascriptSourceMap()
+    {
+        # Create the object...
+        $client = new \Riak\Client(HOST, PORT);
+        $bucket = $client->bucket('bucket');
+        $bucket->newObject('foo', 2)->store();
+
+        # Run the map...
+        $result = $client
+            ->add('bucket', 'foo')
+            ->map('function (v) { return [JSON.parse(v.values[0].data)]; }')
+            ->run();
+        $this->assertEquals(array(2), $result, 'check result');
+    }
+
+    public function testJavascriptNamedMap()
+    {
+        # Create the object...
+        $client = new \Riak\Client(HOST, PORT);
+        $bucket = $client->bucket('bucket');
+        $bucket->newObject('foo', 2)->store();
+
+        # Run the map...
+        $result = $client
+            ->add('bucket', 'foo')
+            ->map('Riak.mapValuesJson')
+            ->run();
+        $this->assertEquals(array(2), $result, 'check result');
+    }
+
+    public function testJavascriptSourceMapReduce()
+    {
+        # Create the object...
+        $client = new \Riak\Client(HOST, PORT);
+        $bucket = $client->bucket('bucket');
+        $bucket->newObject('foo', 2)->store();
+        $bucket->newObject('bar', 3)->store();
+        $bucket->newObject('baz', 4)->store();
+
+        # Run the map...
+        $result = $client
+            ->add('bucket', 'foo')
+            ->add('bucket', 'bar')
+            ->add('bucket', 'baz')
+            ->map('function (v) { return [1]; }')
+            ->reduce('Riak.reduceSum')
+            ->run();
+        $this->assertEquals(3, $result[0], 'check result');
+    }
+
 }
 
