@@ -141,7 +141,7 @@ class Utils
 
             // Get the headers...
             $parsedHeaders = \Riak\Utils::parseHttpHeaders($responseHeadersIO->contents());
-            $responseHeaders = array('httpCode' => $http_code);
+            $responseHeaders = array('httpCode' => $httpCode);
             foreach ($parsedHeaders as $key => $value) {
                 $responseHeaders[strtolower($key)] = $value;
             }
