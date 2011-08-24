@@ -202,7 +202,7 @@ class Bucket
         $obj = new \Riak\Object($this->client, $this, $key);
         $obj->setData($data);
         $obj->setContentType('text/json');
-        $obj->jsonize = true;
+        $obj->setJsonize(true);
 
         return $obj;
     }
@@ -230,7 +230,7 @@ class Bucket
         $obj = new \Riak\Object($this->client, $this, $key);
         $obj->setData($data);
         $obj->setContentType($contentType);
-        $obj->jsonize = false;
+        $obj->setJsonize(false);
 
         return $obj;
     }
@@ -247,7 +247,7 @@ class Bucket
     public function get($key, $r = null)
     {
         $obj = new \Riak\Object($this->client, $this, $key);
-        $obj->jsonize = true;
+        $obj->setJsonize(true);
 
         return $obj->reload($this->getR($r));
     }
@@ -264,7 +264,7 @@ class Bucket
     public function getBinary($key, $r = null)
     {
         $obj = new \Riak\Object($this->client, $this, $key);
-        $obj->jsonize = false;
+        $obj->setJsonize(false);
 
         return $obj->reload($this->getR($r));
     }
@@ -378,7 +378,7 @@ class Bucket
         }
 
         // Check the response value...
-        $status = $response[0]['http_code'];
+        $status = $response[0]['httpCode'];
         if ($status != 204) {
             throw \Exception('Error setting bucket properties.');
         }
@@ -394,9 +394,8 @@ class Bucket
     public function getProperties()
     {
         // Run the request...
-        $params = array('props' => 'true', 'keys' => 'false');
-        $url = \Riak\Utils::buildRestPath($this->client, $this, null, null, $params);
-        $response = RiakUtils::httpRequest('GET', $url);
+        $url = \Riak\Utils::buildRestPath($this->client, $this, null, array(), array('props' => 'true', 'keys' => 'false'));
+        $response = \Riak\Utils::httpRequest('GET', $url);
 
         // Use a RiakObject to interpret the response, we are just interested in the value.
         $obj = new \Riak\Object($this->client, $this, null);
@@ -419,8 +418,7 @@ class Bucket
      */
     public function getKeys()
     {
-        $params = array('props' => 'false', 'keys' => 'true');
-        $url = \Riak\Utils::buildRestPath($this->client, $this, null, null, $params);
+        $url = \Riak\Utils::buildRestPath($this->client, $this, null, array(), array('props' => 'false', 'keys' => 'true'));
         $response = \Riak\Utils::httpRequest('GET', $url);
 
         // Use a RiakObject to interpret the response, we are just interested in the value.

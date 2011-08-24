@@ -107,6 +107,39 @@ class Client
         $this->clientid = 'php_' . base64_encode(rand(1, 1073741824));
     }
 
+    /**
+     * Get server host 
+     * 
+     * @return string
+     * @since  1.0.0
+     */
+    public function getHost()
+    {
+        return $this->host;
+    }
+
+    /**
+     * Get server port 
+     * 
+     * @return integer
+     * @since  1.0.0
+     */
+    public function getPort()
+    {
+        return $this->port;
+    }
+
+    /**
+     * Get prefix 
+     * 
+     * @return string
+     * @since  1.0.0
+     */
+    public function getPrefix()
+    {
+        return $this->prefix;
+    }
+
     // {{{ Service properties getters / setters
 
     /**

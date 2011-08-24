@@ -48,7 +48,7 @@ class Utils
      * @since  1.0.0
      */
     public static function buildRestPath(
-        \Riak\Client$client,
+        \Riak\Client $client,
         \Riak\Bucket $bucket = null,
         $key = null,
         array $spec = array(),
@@ -56,12 +56,12 @@ class Utils
     ) {
         // Build 'http://hostname:port/prefix/bucket'
         $path = 'http://'
-            . $client->host . ':' . $client->port
-            . '/' . $client->prefix;
+            . $client->getHost() . ':' . $client->getPort()
+            . '/' . $client->getPrefix();
 
         // Add '.../bucket'
         if (isset($bucket)) {
-            $path .= '/' . urlencode($bucket->name);
+            $path .= '/' . urlencode($bucket->getName());
         }
 
         // Add '.../key'
