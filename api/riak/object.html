@@ -1,0 +1,768 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
+<meta name="when" content="Thu, 25 Aug 2011 07:53:39 +0000">
+
+<link rel="stylesheet" type="text/css" href="../stylesheet.css">
+<link rel="start" href="../overview-summary.html">
+
+<title>Object (Riak PHP 5.3.x client)</title>
+
+</head>
+<body id="definition" onload="parent.document.title=document.title;">
+
+<div class="header">
+<h1>Riak PHP 5.3.x client</h1>
+<ul>
+<li><a href="../overview-summary.html">Overview</a></li>
+<li><a href="../riak/package-summary.html">Namespace</a></li>
+<li class="active">Class</li>
+<li><a href="../riak/package-tree.html">Tree</a></li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+<li><a href="../todo-list.html">Todo</a></li>
+<li><a href="../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../index.html" target="_top">Frames</a>
+<a href="../riak/object.html" target="_top">No frames</a>
+</div>
+<div class="small_links">
+Summary: <a href="#summary_field">Field</a> | <a href="#summary_method">Method</a> | <a href="#summary_constr">Constr</a>
+Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> | <a href="#summary_constr">Constr</a>
+</div>
+<hr>
+
+<div class="qualifiedName">Riak\Object</div>
+<div class="location">Object.php at line 22</div>
+<h1>Class Object</h1>
+
+<pre class="tree"><strong>Object</strong><br /></pre>
+
+<hr>
+
+<p class="signature">public  class <strong>Object</strong></p>
+
+<div class="comment" id="overview_description"><p>The \Riak\Object holds meta information about a Riak object, plus the object's data.</p></div>
+
+<dl>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+<hr>
+
+<table id="summary_field">
+<tr><th colspan="2">Field Summary</th></tr>
+<tr>
+<td class="type">protected  <a href="../riak/bucket.html">Bucket</a></td>
+<td class="description"><p class="name"><a href="#bucket">$bucket</a></p><p class="description">Bucket</p></td>
+</tr>
+<tr>
+<td class="type">protected  <a href="../riak/client.html">Client</a></td>
+<td class="description"><p class="name"><a href="#client">$client</a></p><p class="description">Client</p></td>
+</tr>
+<tr>
+<td class="type">protected  string|array</td>
+<td class="description"><p class="name"><a href="#data">$data</a></p><p class="description">Object's data</p></td>
+</tr>
+<tr>
+<td class="type">protected  boolean</td>
+<td class="description"><p class="name"><a href="#exists">$exists</a></p><p class="description">Object exists flag</p></td>
+</tr>
+<tr>
+<td class="type">protected  array</td>
+<td class="description"><p class="name"><a href="#headers">$headers</a></p><p class="description">headers</p></td>
+</tr>
+<tr>
+<td class="type">protected  boolean</td>
+<td class="description"><p class="name"><a href="#jsonize">$jsonize</a></p><p class="description">Jsonize data or not</p></td>
+</tr>
+<tr>
+<td class="type">protected  string</td>
+<td class="description"><p class="name"><a href="#key">$key</a></p><p class="description">An optional key. </p></td>
+</tr>
+<tr>
+<td class="type">protected  array</td>
+<td class="description"><p class="name"><a href="#links">$links</a></p><p class="description">links</p></td>
+</tr>
+<tr>
+<td class="type">protected  mixed</td>
+<td class="description"><p class="name"><a href="#siblings">$siblings</a></p><p class="description">siblings</p></td>
+</tr>
+</table>
+
+<table id="summary_method">
+<tr><th colspan="2">Method Summary</th></tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#__construct()">__construct</a>(<a href="../riak/client.html">Client</a> client, <a href="../riak/bucket.html">Bucket</a> bucket, string key)</p><p class="description">Constructor</p></td>
+</tr>
+<tr>
+<td class="type"> <a href="../riak/mapreduce.html">MapReduce</a></td>
+<td class="description"><p class="name"><a href="#add()">add</a>()</p><p class="description">Start assembling a Map/Reduce operation.</p></td>
+</tr>
+<tr>
+<td class="type"> <a href="../riak/object.html">Object</a></td>
+<td class="description"><p class="name"><a href="#addLink()">addLink</a>(object obj, string tag)</p><p class="description">Add a link to a \Riak\Object.</p></td>
+</tr>
+<tr>
+<td class="type">protected  <a href="../riak/object.html">Object</a></td>
+<td class="description"><p class="name"><a href="#clear()">clear</a>()</p><p class="description">Reset this object.</p></td>
+</tr>
+<tr>
+<td class="type"> <a href="../riak/object.html">Object</a></td>
+<td class="description"><p class="name"><a href="#delete()">delete</a>(integer dw)</p><p class="description">Delete this object from Riak.</p></td>
+</tr>
+<tr>
+<td class="type"> boolean</td>
+<td class="description"><p class="name"><a href="#exists()">exists</a>()</p><p class="description">Return true if the object exists, false otherwise. </p></td>
+</tr>
+<tr>
+<td class="type"> <a href="../riak/bucket.html">Bucket</a></td>
+<td class="description"><p class="name"><a href="#getBucket()">getBucket</a>()</p><p class="description">Get bucket</p></td>
+</tr>
+<tr>
+<td class="type"> <a href="../riak/client.html">Client</a></td>
+<td class="description"><p class="name"><a href="#getClient()">getClient</a>()</p><p class="description">Get client</p></td>
+</tr>
+<tr>
+<td class="type"> string</td>
+<td class="description"><p class="name"><a href="#getContentType()">getContentType</a>()</p><p class="description">Get the content type of this object. </p></td>
+</tr>
+<tr>
+<td class="type"> string|array</td>
+<td class="description"><p class="name"><a href="#getData()">getData</a>()</p><p class="description">Get the data stored in this object. </p></td>
+</tr>
+<tr>
+<td class="type"> boolean</td>
+<td class="description"><p class="name"><a href="#getJsonize()">getJsonize</a>()</p><p class="description">Get jsonize flag</p></td>
+</tr>
+<tr>
+<td class="type"> string</td>
+<td class="description"><p class="name"><a href="#getKey()">getKey</a>()</p><p class="description">Get key</p></td>
+</tr>
+<tr>
+<td class="type"> array</td>
+<td class="description"><p class="name"><a href="#getLinks()">getLinks</a>()</p><p class="description">Return an array of \Riak\Link objects.</p></td>
+</tr>
+<tr>
+<td class="type"> <a href="../riak/object.html">Object</a></td>
+<td class="description"><p class="name"><a href="#getSibling()">getSibling</a>(integer i, integer r)</p><p class="description">Retrieve a sibling by sibling number.</p></td>
+</tr>
+<tr>
+<td class="type"> integer</td>
+<td class="description"><p class="name"><a href="#getSiblingCount()">getSiblingCount</a>()</p><p class="description">Get the number of siblings that this object contains.</p></td>
+</tr>
+<tr>
+<td class="type"> array</td>
+<td class="description"><p class="name"><a href="#getSiblings()">getSiblings</a>(integer r)</p><p class="description">Retrieve an array of siblings.</p></td>
+</tr>
+<tr>
+<td class="type"> boolean</td>
+<td class="description"><p class="name"><a href="#hasSiblings()">hasSiblings</a>()</p><p class="description">Return true if this object has siblings.</p></td>
+</tr>
+<tr>
+<td class="type"> <a href="../riak/mapreduce.html">MapReduce</a></td>
+<td class="description"><p class="name"><a href="#link()">link</a>()</p><p class="description">Start assembling a Map/Reduce operation.</p></td>
+</tr>
+<tr>
+<td class="type"> <a href="../riak/mapreduce.html">MapReduce</a></td>
+<td class="description"><p class="name"><a href="#map()">map</a>()</p><p class="description">Start assembling a Map/Reduce operation.</p></td>
+</tr>
+<tr>
+<td class="type"> <a href="../riak/object.html">Object</a></td>
+<td class="description"><p class="name"><a href="#populate()">populate</a>(array response, array expectedStatuses)</p><p class="description">Given the output of \Riak\Utils::httpRequest and a list of
+statuses, populate the object. </p></td>
+</tr>
+<tr>
+<td class="type">protected  <a href="../riak/object.html">Object</a></td>
+<td class="description"><p class="name"><a href="#populateLinks()">populateLinks</a>(string linkHeaders)</p><p class="description">Populate links</p></td>
+</tr>
+<tr>
+<td class="type"> <a href="../riak/mapreduce.html">MapReduce</a></td>
+<td class="description"><p class="name"><a href="#reduce()">reduce</a>()</p><p class="description">Start assembling a Map/Reduce operation.</p></td>
+</tr>
+<tr>
+<td class="type"> <a href="../riak/object.html">Object</a></td>
+<td class="description"><p class="name"><a href="#reload()">reload</a>(integer r)</p><p class="description">Reload the object from Riak. </p></td>
+</tr>
+<tr>
+<td class="type"> <a href="../riak/object.html">Object</a></td>
+<td class="description"><p class="name"><a href="#removeLink()">removeLink</a>(object obj, string tag)</p><p class="description">Remove a link to a \Riak\Object.</p></td>
+</tr>
+<tr>
+<td class="type"> <a href="../riak/object.html">Object</a></td>
+<td class="description"><p class="name"><a href="#setContentType()">setContentType</a>(string contentType)</p><p class="description">Set the content type of this object.</p></td>
+</tr>
+<tr>
+<td class="type"> mixed</td>
+<td class="description"><p class="name"><a href="#setData()">setData</a>(mixed data)</p><p class="description">Set the data stored in this object. </p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#setJsonize()">setJsonize</a>(boolean jsonize)</p><p class="description">Set jsonize flag</p></td>
+</tr>
+<tr>
+<td class="type"> integer</td>
+<td class="description"><p class="name"><a href="#status()">status</a>()</p><p class="description">Get the HTTP status from the last operation on this object.</p></td>
+</tr>
+<tr>
+<td class="type"> <a href="../riak/object.html">Object</a></td>
+<td class="description"><p class="name"><a href="#store()">store</a>(integer w, integer dw)</p><p class="description">Store the object in Riak. </p></td>
+</tr>
+<tr>
+<td class="type">protected  string</td>
+<td class="description"><p class="name"><a href="#vclock()">vclock</a>()</p><p class="description">Get the vclock of this object.</p></td>
+</tr>
+</table>
+
+<h2 id="detail_field">Field Detail</h2>
+<div class="location">Object.php at line 38</div>
+<h3 id="bucket">bucket</h3>
+<code class="signature">protected  <a href="../riak/bucket.html">Bucket</a> <strong>$bucket</strong></code>
+<div class="details">
+<p>Bucket</p><dl>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 30</div>
+<h3 id="client">client</h3>
+<code class="signature">protected  <a href="../riak/client.html">Client</a> <strong>$client</strong> = null</code>
+<div class="details">
+<p>Client</p><dl>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 94</div>
+<h3 id="data">data</h3>
+<code class="signature">protected  string|array <strong>$data</strong></code>
+<div class="details">
+<p>Object's data</p><dl>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 86</div>
+<h3 id="exists">exists</h3>
+<code class="signature">protected  boolean <strong>$exists</strong> = false</code>
+<div class="details">
+<p>Object exists flag</p><dl>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 62</div>
+<h3 id="headers">headers</h3>
+<code class="signature">protected  array <strong>$headers</strong> = array()</code>
+<div class="details">
+<p>headers</p><dl>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 54</div>
+<h3 id="jsonize">jsonize</h3>
+<code class="signature">protected  boolean <strong>$jsonize</strong> = true</code>
+<div class="details">
+<p>Jsonize data or not</p><dl>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 46</div>
+<h3 id="key">key</h3>
+<code class="signature">protected  string <strong>$key</strong></code>
+<div class="details">
+<p>An optional key. If not specified, then key is generated by server when store(...) is called.</p><dl>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 70</div>
+<h3 id="links">links</h3>
+<code class="signature">protected  array <strong>$links</strong> = array()</code>
+<div class="details">
+<p>links</p><dl>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 78</div>
+<h3 id="siblings">siblings</h3>
+<code class="signature">protected  mixed <strong>$siblings</strong> = null</code>
+<div class="details">
+<p>siblings</p><dl>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<h2 id="detail_method">Method Detail</h2>
+<div class="location">Object.php at line 106</div>
+<h3 id="__construct()">__construct</h3>
+<code class="signature">public  void <strong>__construct</strong>(<a href="../riak/client.html">Client</a> client, <a href="../riak/bucket.html">Bucket</a> bucket, string key)</code>
+<div class="details">
+<p>Constructor</p><dl>
+<dt>Parameters:</dt>
+<dd>client - Client</dd>
+<dd>bucket - Bucket</dd>
+<dd>key - An optional key. If not specified, then key is generated by server when store(...) is called. OPTIONAL</dd>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 481</div>
+<h3 id="add()">add</h3>
+<code class="signature">public  <a href="../riak/mapreduce.html">MapReduce</a> <strong>add</strong>()</code>
+<div class="details">
+<p>Start assembling a Map/Reduce operation.</p><dl>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 257</div>
+<h3 id="addLink()">addLink</h3>
+<code class="signature">public  <a href="../riak/object.html">Object</a> <strong>addLink</strong>(object obj, string tag)</code>
+<div class="details">
+<p>Add a link to a \Riak\Object.</p><dl>
+<dt>Parameters:</dt>
+<dd>obj - Either a \Riak\Object or a \Riak\Link object</dd>
+<dd>tag - Optional link tag. (default is bucket name, ignored if $obj is a \Riak\Link object.) OPTIONAL</dd>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 615</div>
+<h3 id="clear()">clear</h3>
+<code class="signature">protected  <a href="../riak/object.html">Object</a> <strong>clear</strong>()</code>
+<div class="details">
+<p>Reset this object.</p><dl>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 392</div>
+<h3 id="delete()">delete</h3>
+<code class="signature">public  <a href="../riak/object.html">Object</a> <strong>delete</strong>(integer dw)</code>
+<div class="details">
+<p>Delete this object from Riak.</p><dl>
+<dt>Parameters:</dt>
+<dd>dw - DW-value. Wait until this many partitions have deleted the object before responding OPTIONAL</dd>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 217</div>
+<h3 id="exists()">exists</h3>
+<code class="signature">public  boolean <strong>exists</strong>()</code>
+<div class="details">
+<p>Return true if the object exists, false otherwise. Allows you to detect a get(...) or getBinary(...) operation where the object is missing.</p><dl>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 130</div>
+<h3 id="getBucket()">getBucket</h3>
+<code class="signature">public  <a href="../riak/bucket.html">Bucket</a> <strong>getBucket</strong>()</code>
+<div class="details">
+<p>Get bucket</p><dl>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 119</div>
+<h3 id="getClient()">getClient</h3>
+<code class="signature">public  <a href="../riak/client.html">Client</a> <strong>getClient</strong>()</code>
+<div class="details">
+<p>Get client</p><dl>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 228</div>
+<h3 id="getContentType()">getContentType</h3>
+<code class="signature">public  string <strong>getContentType</strong>()</code>
+<div class="details">
+<p>Get the content type of this object. This is either text/json, or the provided content type if the object was created via newBinary(...).</p><dl>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 154</div>
+<h3 id="getData()">getData</h3>
+<code class="signature">public  string|array <strong>getData</strong>()</code>
+<div class="details">
+<p>Get the data stored in this object. Will return a associative
+array, unless the object was constructed with newBinary(...) or
+getBinary(...), in which case this will return a string.</p><dl>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 182</div>
+<h3 id="getJsonize()">getJsonize</h3>
+<code class="signature">public  boolean <strong>getJsonize</strong>()</code>
+<div class="details">
+<p>Get jsonize flag</p><dl>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 141</div>
+<h3 id="getKey()">getKey</h3>
+<code class="signature">public  string <strong>getKey</strong>()</code>
+<div class="details">
+<p>Get key</p><dl>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 297</div>
+<h3 id="getLinks()">getLinks</h3>
+<code class="signature">public  array <strong>getLinks</strong>()</code>
+<div class="details">
+<p>Return an array of \Riak\Link objects.</p><dl>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 438</div>
+<h3 id="getSibling()">getSibling</h3>
+<code class="signature">public  <a href="../riak/object.html">Object</a> <strong>getSibling</strong>(integer i, integer r)</code>
+<div class="details">
+<p>Retrieve a sibling by sibling number.</p><dl>
+<dt>Parameters:</dt>
+<dd>i - Sibling number</dd>
+<dd>r - R-Value. Wait until this many partitions have responded before returning to client OPTIONAL</dd>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 424</div>
+<h3 id="getSiblingCount()">getSiblingCount</h3>
+<code class="signature">public  integer <strong>getSiblingCount</strong>()</code>
+<div class="details">
+<p>Get the number of siblings that this object contains.</p><dl>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 465</div>
+<h3 id="getSiblings()">getSiblings</h3>
+<code class="signature">public  array <strong>getSiblings</strong>(integer r)</code>
+<div class="details">
+<p>Retrieve an array of siblings.</p><dl>
+<dt>Parameters:</dt>
+<dd>r - R-Value. Wait until this many partitions have responded before returning to client OPTIONAL</dd>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 413</div>
+<h3 id="hasSiblings()">hasSiblings</h3>
+<code class="signature">public  boolean <strong>hasSiblings</strong>()</code>
+<div class="details">
+<p>Return true if this object has siblings.</p><dl>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 495</div>
+<h3 id="link()">link</h3>
+<code class="signature">public  <a href="../riak/mapreduce.html">MapReduce</a> <strong>link</strong>()</code>
+<div class="details">
+<p>Start assembling a Map/Reduce operation.</p><dl>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 509</div>
+<h3 id="map()">map</h3>
+<code class="signature">public  <a href="../riak/mapreduce.html">MapReduce</a> <strong>map</strong>()</code>
+<div class="details">
+<p>Start assembling a Map/Reduce operation.</p><dl>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 543</div>
+<h3 id="populate()">populate</h3>
+<code class="signature">public  <a href="../riak/object.html">Object</a> <strong>populate</strong>(array response, array expectedStatuses)</code>
+<div class="details">
+<p>Given the output of \Riak\Utils::httpRequest and a list of
+statuses, populate the object. Only for use by the Riak client
+library.</p><dl>
+<dt>Parameters:</dt>
+<dd>response - Response</dd>
+<dd>expectedStatuses - Extepcted statuses</dd>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+<dt>Throws:</dt>
+<dd>\Exception</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 645</div>
+<h3 id="populateLinks()">populateLinks</h3>
+<code class="signature">protected  <a href="../riak/object.html">Object</a> <strong>populateLinks</strong>(string linkHeaders)</code>
+<div class="details">
+<p>Populate links</p><dl>
+<dt>Parameters:</dt>
+<dd>linkHeaders - Links as string, from HTTP headers</dd>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 523</div>
+<h3 id="reduce()">reduce</h3>
+<code class="signature">public  <a href="../riak/mapreduce.html">MapReduce</a> <strong>reduce</strong>()</code>
+<div class="details">
+<p>Start assembling a Map/Reduce operation.</p><dl>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 368</div>
+<h3 id="reload()">reload</h3>
+<code class="signature">public  <a href="../riak/object.html">Object</a> <strong>reload</strong>(integer r)</code>
+<div class="details">
+<p>Reload the object from Riak. When this operation completes, the
+object could contain new metadata and a new value, if the object
+was updated in Riak since it was last retrieved.</p><dl>
+<dt>Parameters:</dt>
+<dd>r - R-Value, wait for this many partitions to respond before returning to client OPTIONAL</dd>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 275</div>
+<h3 id="removeLink()">removeLink</h3>
+<code class="signature">public  <a href="../riak/object.html">Object</a> <strong>removeLink</strong>(object obj, string tag)</code>
+<div class="details">
+<p>Remove a link to a \Riak\Object.</p><dl>
+<dt>Parameters:</dt>
+<dd>obj - Either a \Riak\Object or a \Riak\Link object</dd>
+<dd>tag - Optional link tag. (default is bucket name, ignored if $obj is a \Riak\Link object.) OPTIONAL</dd>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 241</div>
+<h3 id="setContentType()">setContentType</h3>
+<code class="signature">public  <a href="../riak/object.html">Object</a> <strong>setContentType</strong>(string contentType)</code>
+<div class="details">
+<p>Set the content type of this object.</p><dl>
+<dt>Parameters:</dt>
+<dd>contentType - The new content type</dd>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 169</div>
+<h3 id="setData()">setData</h3>
+<code class="signature">public  mixed <strong>setData</strong>(mixed data)</code>
+<div class="details">
+<p>Set the data stored in this object. This data will be
+JSON encoded unless the object was constructed with
+newBinary(...) or getBinary(...).</p><dl>
+<dt>Parameters:</dt>
+<dd>data - The data to store</dd>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 195</div>
+<h3 id="setJsonize()">setJsonize</h3>
+<code class="signature">public  void <strong>setJsonize</strong>(boolean jsonize)</code>
+<div class="details">
+<p>Set jsonize flag</p><dl>
+<dt>Parameters:</dt>
+<dd>jsonize - Flag</dd>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 206</div>
+<h3 id="status()">status</h3>
+<code class="signature">public  integer <strong>status</strong>()</code>
+<div class="details">
+<p>Get the HTTP status from the last operation on this object.</p><dl>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 318</div>
+<h3 id="store()">store</h3>
+<code class="signature">public  <a href="../riak/object.html">Object</a> <strong>store</strong>(integer w, integer dw)</code>
+<div class="details">
+<p>Store the object in Riak. When this operation completes, the
+object could contain new metadata and possibly new data if Riak
+contains a newer version of the object according to the object's
+vector clock.</p><dl>
+<dt>Parameters:</dt>
+<dd>w - W-value, wait for this many partitions to respond before returning to client OPTIONAL</dd>
+<dd>dw - DW-value, wait for this many partitions to confirm the write before returning to client OPTIONAL</dd>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="location">Object.php at line 632</div>
+<h3 id="vclock()">vclock</h3>
+<code class="signature">protected  string <strong>vclock</strong>()</code>
+<div class="details">
+<p>Get the vclock of this object.</p><dl>
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="header">
+<h1>Riak PHP 5.3.x client</h1>
+<ul>
+<li><a href="../overview-summary.html">Overview</a></li>
+<li><a href="../riak/package-summary.html">Namespace</a></li>
+<li class="active">Class</li>
+<li><a href="../riak/package-tree.html">Tree</a></li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+<li><a href="../todo-list.html">Todo</a></li>
+<li><a href="../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../index.html" target="_top">Frames</a>
+<a href="../riak/object.html" target="_top">No frames</a>
+</div>
+<div class="small_links">
+Summary: <a href="#summary_field">Field</a> | <a href="#summary_method">Method</a> | <a href="#summary_constr">Constr</a>
+Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> | <a href="#summary_constr">Constr</a>
+</div>
+<hr>
+
+<p id="footer">This document was generated by <a href="http://peej.github.com/phpdoctor/">PHPDoctor: The PHP Documentation Creator</a></p>
+
+</body>
+
+</html>

@@ -1,0 +1,467 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
+<meta name="when" content="Thu, 25 Aug 2011 07:50:23 +0000">
+
+<link rel="stylesheet" type="text/css" href="../stylesheet.css">
+<link rel="start" href="../overview-summary.html">
+
+<title>MapReduce.php (Riak PHP 5.3.x client)</title>
+
+</head>
+<body id="file" onload="parent.document.title=document.title;">
+
+<div class="header">
+<h1>Riak PHP 5.3.x client</h1>
+<ul>
+<li><a href="../overview-summary.html">Overview</a></li>
+<li>Package</li><li>Class</li><li>Tree</li><li><a href="../overview-files.html">Files</a></li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+<li><a href="../todo-list.html">Todo</a></li>
+<li><a href="../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../index.html" target="_top">Frames</a>
+<a href="../source/mapreduce.php.html" target="_top">No frames</a>
+</div>
+<hr>
+
+<h1>MapReduce.php</h1>
+<div class="comment" id="overview_description"><p>PHP version 5.3.0</p></div>
+
+<hr>
+
+<a name="line1"></a><pre><?php
+<a name="line2"></a>// vim: set ts=4 sw=4 sts=4 et:
+<a name="line3"></a>
+<a name="line4"></a>/**
+<a name="line5"></a> * PHP version 5.3.0
+<a name="line6"></a> * 
+<a name="line7"></a> * @author  Rusty Klophaus (@rklophaus) (rusty@basho.com) 
+<a name="line8"></a> * @author  Maxim Shamaev (maxim.shamaev@gmail.com) 
+<a name="line9"></a> * @license Apache License 2.0 http://www.apache.org/licenses/LICENSE-2.0
+<a name="line10"></a> * @version $id$
+<a name="line11"></a> * @link    http://www.basho.com/
+<a name="line12"></a> * @since   1.0.0
+<a name="line13"></a> */
+<a name="line14"></a>
+<a name="line15"></a>namespace Riak;
+<a name="line16"></a>
+<a name="line17"></a>/**
+<a name="line18"></a> * The \Riak\MapReduce object allows you to build up and run a map/reduce operation on Riak.
+<a name="line19"></a> * 
+<a name="line20"></a> * @since 1.0.0
+<a name="line21"></a> */
+<a name="line22"></a>class MapReduce
+<a name="line23"></a>{
+<a name="line24"></a>    /**
+<a name="line25"></a>     * Riak client 
+<a name="line26"></a>     * 
+<a name="line27"></a>     * @var   \Riak\Client
+<a name="line28"></a>     * @since 1.0.0
+<a name="line29"></a>     */
+<a name="line30"></a>    protected $client;
+<a name="line31"></a>
+<a name="line32"></a>    /**
+<a name="line33"></a>     * Phases 
+<a name="line34"></a>     * 
+<a name="line35"></a>     * @var   array
+<a name="line36"></a>     * @since 1.0.0
+<a name="line37"></a>     */
+<a name="line38"></a>    protected $phases = array();
+<a name="line39"></a>
+<a name="line40"></a>    /**
+<a name="line41"></a>     * Inputs 
+<a name="line42"></a>     * 
+<a name="line43"></a>     * @var   array
+<a name="line44"></a>     * @since 1.0.0
+<a name="line45"></a>     */
+<a name="line46"></a>    protected $inputs = array();
+<a name="line47"></a>
+<a name="line48"></a>    /**
+<a name="line49"></a>     * Input mode 
+<a name="line50"></a>     * 
+<a name="line51"></a>     * @var   string
+<a name="line52"></a>     * @since 1.0.0
+<a name="line53"></a>     */
+<a name="line54"></a>    protected $inputMode;
+<a name="line55"></a>
+<a name="line56"></a>    /**
+<a name="line57"></a>     * Key filters 
+<a name="line58"></a>     * 
+<a name="line59"></a>     * @var   array
+<a name="line60"></a>     * @since 1.0.0
+<a name="line61"></a>     */
+<a name="line62"></a>    protected $keyFilters = array();
+<a name="line63"></a>
+<a name="line64"></a>    /**
+<a name="line65"></a>     * Constructor
+<a name="line66"></a>     * 
+<a name="line67"></a>     * @param \Riak\Client $client Client
+<a name="line68"></a>     *  
+<a name="line69"></a>     * @return void
+<a name="line70"></a>     * @since  1.0.0
+<a name="line71"></a>     */
+<a name="line72"></a>    public function __construct(\Riak\Client $client)
+<a name="line73"></a>    {
+<a name="line74"></a>        $this->client = $client;
+<a name="line75"></a>    }
+<a name="line76"></a>
+<a name="line77"></a>    // {{{ Operations
+<a name="line78"></a>
+<a name="line79"></a>    /**
+<a name="line80"></a>     * Add inputs to a map/reduce operation. This method takes three
+<a name="line81"></a>     * different forms, depending on the provided inputs. You can
+<a name="line82"></a>     * specify either  a \Riak\Object, a string bucket name, or a bucket,
+<a name="line83"></a>     * key, and additional argument.
+<a name="line84"></a>     * 
+<a name="line85"></a>     * @param \Riak\Object|\Riak\Bucket $arg1 Riak object or bucket
+<a name="line86"></a>     * @param string                    $arg2 Key
+<a name="line87"></a>     * @param mixed                     $arg3 Additional argument
+<a name="line88"></a>     *  
+<a name="line89"></a>     * @return \Riak\MapReduce
+<a name="line90"></a>     * @since  1.0.0
+<a name="line91"></a>     */
+<a name="line92"></a>    public function add($arg1, $arg2 = null, $arg3 = null)
+<a name="line93"></a>    {
+<a name="line94"></a>        if (func_num_args() != 1) {
+<a name="line95"></a>            $result = $this->addBucketKeyData($arg1, (string) $arg2, $arg3);
+<a name="line96"></a>
+<a name="line97"></a>        } elseif ($arg1 instanceof \Riak\Object) {
+<a name="line98"></a>            $result = $this->addObject($arg1);
+<a name="line99"></a>
+<a name="line100"></a>        } else {
+<a name="line101"></a>            $result = $this->addBucket($arg1);
+<a name="line102"></a>        }
+<a name="line103"></a>
+<a name="line104"></a>        return $result;
+<a name="line105"></a>    }
+<a name="line106"></a>
+<a name="line107"></a>    /**
+<a name="line108"></a>     * Begin a map/reduce operation using a Search. This command will
+<a name="line109"></a>     * return an error unless executed against a Riak Search cluster.
+<a name="line110"></a>     * 
+<a name="line111"></a>     * @param string $bucket Bucket name
+<a name="line112"></a>     * @param string $query  The Query to execute. (Lucene syntax)
+<a name="line113"></a>     *  
+<a name="line114"></a>     * @return \Riak\MapReduce
+<a name="line115"></a>     * @since  1.0.0
+<a name="line116"></a>     */
+<a name="line117"></a>    public function search($bucket, $query)
+<a name="line118"></a>    {
+<a name="line119"></a>        $this->inputs = array(
+<a name="line120"></a>            'module'   => 'riak_search',
+<a name="line121"></a>            'function' => 'mapred_search',
+<a name="line122"></a>            'arg'      => array($bucket, $query)
+<a name="line123"></a>        );
+<a name="line124"></a>
+<a name="line125"></a>        return $this;
+<a name="line126"></a>    }
+<a name="line127"></a>
+<a name="line128"></a>    /**
+<a name="line129"></a>     * Add a link phase to the map/reduce operation.
+<a name="line130"></a>     *
+<a name="line131"></a>     * @param string  $bucket Bucket name (default '_', which means all buckets) OPTIONAL
+<a name="line132"></a>     * @param string  $tag    Tag (default '_', which means all buckets) OPTIONAL
+<a name="line133"></a>     * @param boolean $keep   Flag whether to keep results from this stage in the map/reduce. (default FALSE, unless this is the last step in the phase)
+<a name="line134"></a>     *  
+<a name="line135"></a>     * @return \Riak\MapReduce
+<a name="line136"></a>     * @since  1.0.0
+<a name="line137"></a>     */
+<a name="line138"></a>    public function link($bucket = '_', $tag = '_', $keep = false)
+<a name="line139"></a>    {
+<a name="line140"></a>        $this->phases[] = new \Riak\Link\Phase($bucket, $tag, $keep);
+<a name="line141"></a>
+<a name="line142"></a>        return $this;
+<a name="line143"></a>    }
+<a name="line144"></a>
+<a name="line145"></a>    /**
+<a name="line146"></a>     * Add a map phase to the map/reduce operation.
+<a name="line147"></a>     * 
+<a name="line148"></a>     * @param string|array $function Either a named Javascript function (ie: "Riak.mapValues"), or an anonymous javascript function (ie: "function(...) { ... }" or an array ["erlang_module", "function"].
+<a name="line149"></a>     * @param array        $options  An optional associative array containing "language", "keep" flag, and/or "arg". OPTIONAL
+<a name="line150"></a>     *  
+<a name="line151"></a>     * @return \Riak\MapReduce
+<a name="line152"></a>     * @since  1.0.0
+<a name="line153"></a>     */
+<a name="line154"></a>    public function map($function, array $options = array())
+<a name="line155"></a>    {
+<a name="line156"></a>        $language = is_array($function) ? 'erlang' : 'javascript';
+<a name="line157"></a>        $this->phases[] = new \Riak\MapReduce\Phase(
+<a name="line158"></a>            'map',
+<a name="line159"></a>            $function,
+<a name="line160"></a>            \Riak\Utils::getValue('language', $options, $language),
+<a name="line161"></a>            \Riak\Utils::getValue('keep', $options, false),
+<a name="line162"></a>            \Riak\Utils::getValue('arg', $options, null)
+<a name="line163"></a>        );
+<a name="line164"></a>
+<a name="line165"></a>        return $this;
+<a name="line166"></a>    }
+<a name="line167"></a>
+<a name="line168"></a>    /**
+<a name="line169"></a>     * Add a reduce phase to the map/reduce operation.
+<a name="line170"></a>     * 
+<a name="line171"></a>     * @param string|array $function Either a named Javascript function (ie: "Riak.mapValues"), or an anonymous javascript function (ie: "function(...) { ... }" or an array ["erlang_module", "function"].
+<a name="line172"></a>     * @param array        $options  An optional associative array containing "language", "keep" flag, and/or "arg". OPTIONAL
+<a name="line173"></a>     *  
+<a name="line174"></a>     * @return \Riak\MapReduce
+<a name="line175"></a>     * @since  1.0.0
+<a name="line176"></a>     */
+<a name="line177"></a>    public function reduce($function, array $options = array())
+<a name="line178"></a>    {
+<a name="line179"></a>        $language = is_array($function) ? 'erlang' : 'javascript';
+<a name="line180"></a>        $this->phases[] = new \Riak\MapReduce\Phase(
+<a name="line181"></a>            'reduce',
+<a name="line182"></a>            $function,
+<a name="line183"></a>            \Riak\Utils::getValue('language', $options, $language),
+<a name="line184"></a>            \Riak\Utils::getValue('keep', $options, false),
+<a name="line185"></a>            \Riak\Utils::getValue('arg', $options, null)
+<a name="line186"></a>        );
+<a name="line187"></a>
+<a name="line188"></a>        return $this;
+<a name="line189"></a>    }
+<a name="line190"></a>
+<a name="line191"></a>    /**
+<a name="line192"></a>     * Add a key filter to the map/reduce operation.  If there are already
+<a name="line193"></a>     * existing filters, an "and" condition will be used to combine them.
+<a name="line194"></a>     * Alias for keyFilterAnd
+<a name="line195"></a>     *  
+<a name="line196"></a>     * @return \Riak\MapReduce
+<a name="line197"></a>     * @since  1.0.0
+<a name="line198"></a>     */
+<a name="line199"></a>    public function keyFilter()
+<a name="line200"></a>    {
+<a name="line201"></a>        $args = func_get_args();
+<a name="line202"></a>        array_unshift($args, 'and');
+<a name="line203"></a>
+<a name="line204"></a>        return call_user_func_array(array($this, 'keyFilterOperator'), $args);
+<a name="line205"></a>    }
+<a name="line206"></a>
+<a name="line207"></a>    /**
+<a name="line208"></a>     * Add a key filter to the map/reduce operation.  If there are already
+<a name="line209"></a>     * existing filters, an "and" condition will be used to combine them.
+<a name="line210"></a>     *
+<a name="line211"></a>     * @return \Riak\MapReduce
+<a name="line212"></a>     * @since  1.0.0
+<a name="line213"></a>     */
+<a name="line214"></a>    public function keyFilterAnd()
+<a name="line215"></a>    {
+<a name="line216"></a>        $args = func_get_args();
+<a name="line217"></a>        array_unshift($args, 'and');
+<a name="line218"></a>
+<a name="line219"></a>        return call_user_func_array(array($this, 'keyFilterOperator'), $args);
+<a name="line220"></a>    }
+<a name="line221"></a>
+<a name="line222"></a>    /**
+<a name="line223"></a>     * Add a key filter to the map/reduce operation.  If there are already
+<a name="line224"></a>     * existing filters, an "or" condition will be used to combine them.
+<a name="line225"></a>     *
+<a name="line226"></a>     * @return \Riak\MapReduce
+<a name="line227"></a>     * @since  1.0.0
+<a name="line228"></a>     */
+<a name="line229"></a>    public function keyFilterOr()
+<a name="line230"></a>    {
+<a name="line231"></a>        $args = func_get_args();
+<a name="line232"></a>        array_unshift($args, 'or');
+<a name="line233"></a>
+<a name="line234"></a>        return call_user_func_array(array($this, 'keyFilterOperator'), $args);
+<a name="line235"></a>    }
+<a name="line236"></a>
+<a name="line237"></a>    /**
+<a name="line238"></a>     * Adds a key filter to the map/reduce operation.  If there are already
+<a name="line239"></a>     * existing filters, the provided conditional operator will be used
+<a name="line240"></a>     * to combine with the existing filters.
+<a name="line241"></a>     * 
+<a name="line242"></a>     * @param string $operator Operator (usually "and" or "or")
+<a name="line243"></a>     *  
+<a name="line244"></a>     * @return \Riak\MapReduce
+<a name="line245"></a>     * @since  1.0.0
+<a name="line246"></a>     */
+<a name="line247"></a>    public function keyFilterOperator($operator)
+<a name="line248"></a>    {
+<a name="line249"></a>        if ('bucket' != $this->inputMode) {
+<a name="line250"></a>          throw new \Exception('Key filters can only be used in bucket mode');
+<a name="line251"></a>        }
+<a name="line252"></a>
+<a name="line253"></a>        $filters = func_get_args();
+<a name="line254"></a>        array_shift($filters);
+<a name="line255"></a>
+<a name="line256"></a>        if (count($this->keyFilters) > 0) {
+<a name="line257"></a>            $this->keyFilters = array(
+<a name="line258"></a>                array(
+<a name="line259"></a>                    $operator,
+<a name="line260"></a>                    $this->keyFilters,
+<a name="line261"></a>                    $filters
+<a name="line262"></a>                )
+<a name="line263"></a>            );
+<a name="line264"></a>
+<a name="line265"></a>        } else {
+<a name="line266"></a>            $this->keyFilters = $filters;
+<a name="line267"></a>        }
+<a name="line268"></a>
+<a name="line269"></a>        return $this;
+<a name="line270"></a>    }
+<a name="line271"></a>
+<a name="line272"></a>    /**
+<a name="line273"></a>     * Run the map/reduce operation. Returns an array of results, or an
+<a name="line274"></a>     * array of \Riak\Link objects if the last phase is a link phase.
+<a name="line275"></a>     * 
+<a name="line276"></a>     * @param integer $timeout Timeout in seconds OPTIONAL
+<a name="line277"></a>     *  
+<a name="line278"></a>     * @return array
+<a name="line279"></a>     * @since  1.0.0
+<a name="line280"></a>     */
+<a name="line281"></a>    public function run($timeout = null)
+<a name="line282"></a>    {
+<a name="line283"></a>        $numPhases = count($this->phases);
+<a name="line284"></a>
+<a name="line285"></a>        // If there are no phases, then just echo the inputs back to the user.
+<a name="line286"></a>        if (0 == $numPhases) {
+<a name="line287"></a>            $this->reduce(array('riak_kv_mapreduce', 'reduce_identity'));
+<a name="line288"></a>            $numPhases = 1;
+<a name="line289"></a>            $linkResultsFlag = true;
+<a name="line290"></a>
+<a name="line291"></a>        } else {
+<a name="line292"></a>            $linkResultsFlag = false;
+<a name="line293"></a>        }
+<a name="line294"></a>
+<a name="line295"></a>        /**
+<a name="line296"></a>         * Convert all phases to associative arrays. Also,
+<a name="line297"></a>         * if none of the phases are accumulating, then set the last one to
+<a name="line298"></a>         * accumulate.
+<a name="line299"></a>         */
+<a name="line300"></a>        $keepFlag = false;
+<a name="line301"></a>        $query = array();
+<a name="line302"></a>        for ($i = 0; $i < $numPhases; $i++) {
+<a name="line303"></a>            $phase = $this->phases[$i];
+<a name="line304"></a>            if ($i == ($numPhases - 1) && !$keepFlag) {
+<a name="line305"></a>                $phase->setKeep(true);
+<a name="line306"></a>            }
+<a name="line307"></a>
+<a name="line308"></a>            if ($phase->getKeep()) {
+<a name="line309"></a>                $keepFlag = true;
+<a name="line310"></a>            }
+<a name="line311"></a>
+<a name="line312"></a>            $query[] = $phase->toArray();
+<a name="line313"></a>        }
+<a name="line314"></a>
+<a name="line315"></a>        // Add key filters if applicable
+<a name="line316"></a>        if ('bucket' == $this->inputMode && count($this->keyFilters) > 0) {
+<a name="line317"></a>            $this->inputs = array(
+<a name="line318"></a>                'bucket'      => $this->inputs,
+<a name="line319"></a>                'key_filters' => $this->keyFilters,
+<a name="line320"></a>            );
+<a name="line321"></a>        }
+<a name="line322"></a>
+<a name="line323"></a>        // Construct the job, optionally set the timeout...
+<a name="line324"></a>        $job = array('inputs' => $this->inputs, 'query' => $query);
+<a name="line325"></a>        if (isset($timeout)) {
+<a name="line326"></a>            $job['timeout'] = $timeout;
+<a name="line327"></a>        }
+<a name="line328"></a>        $content = json_encode($job);
+<a name="line329"></a>
+<a name="line330"></a>        // Do the request...
+<a name="line331"></a>        $url = 'http://' . $this->client->getHost() . ':' . $this->client->getPort() . '/' . $this->client->getMapredPrefix();
+<a name="line332"></a>        $response = \Riak\Utils::httpRequest('POST', $url, array(), $content);
+<a name="line333"></a>        $result = json_decode($response[1]);
+<a name="line334"></a>
+<a name="line335"></a>        // If the last phase is NOT a link phase, then return the result.
+<a name="line336"></a>        $linkResultsFlag |= (end($this->phases) instanceof \Riak\Link\Phase);
+<a name="line337"></a>
+<a name="line338"></a>        if ($linkResultsFlag) {
+<a name="line339"></a>
+<a name="line340"></a>            // If the last phase IS a link phase, then convert the results to \Riak\Link objects.
+<a name="line341"></a>            $a = array();
+<a name="line342"></a>            foreach ($result as $r) {
+<a name="line343"></a>                $tag = isset($r[2]) ? $r[2] : null;
+<a name="line344"></a>                $link = new \Riak\Link($r[0], $r[1], $tag);
+<a name="line345"></a>                $link->client = $this->client;
+<a name="line346"></a>                $a[] = $link;
+<a name="line347"></a>            }
+<a name="line348"></a>            $result = $a;
+<a name="line349"></a>        }
+<a name="line350"></a>
+<a name="line351"></a>        return $result;
+<a name="line352"></a>    }
+<a name="line353"></a>
+<a name="line354"></a>    /**
+<a name="line355"></a>     * Add object 
+<a name="line356"></a>     * 
+<a name="line357"></a>     * @param \Riak\Object $obj Object
+<a name="line358"></a>     *  
+<a name="line359"></a>     * @return \Riak\MapReduce
+<a name="line360"></a>     * @since  1.0.0
+<a name="line361"></a>     */
+<a name="line362"></a>    protected function addObject(\Riak\Object $obj)
+<a name="line363"></a>    {
+<a name="line364"></a>        return $this->addBucketKeyData($obj->bucket->name, $obj->key);
+<a name="line365"></a>    }
+<a name="line366"></a>
+<a name="line367"></a>    /**
+<a name="line368"></a>     * Add bucket 
+<a name="line369"></a>     * 
+<a name="line370"></a>     * @param string|\Riak\Bucket $bucket Bucket name or bucket
+<a name="line371"></a>     *  
+<a name="line372"></a>     * @return \Riak\MapReduce
+<a name="line373"></a>     * @since  1.0.0
+<a name="line374"></a>     */
+<a name="line375"></a>    protected function addBucket($bucket)
+<a name="line376"></a>    {
+<a name="line377"></a>        $this->inputMode = 'bucket';
+<a name="line378"></a>        $this->inputs = (is_object($bucket) && $bucket instanceof \Riak\Bucket) ? $bucket->getName() : $bucket;
+<a name="line379"></a>
+<a name="line380"></a>        return $this;
+<a name="line381"></a>    }
+<a name="line382"></a>
+<a name="line383"></a>    /**
+<a name="line384"></a>     * Add bucket key data 
+<a name="line385"></a>     * 
+<a name="line386"></a>     * @param string $bucket Bucket name
+<a name="line387"></a>     * @param string $key    Key
+<a name="line388"></a>     * @param mixed  $data   Additional data OPTIONAL
+<a name="line389"></a>     *  
+<a name="line390"></a>     * @return void
+<a name="line391"></a>     * @since  1.0.0
+<a name="line392"></a>     */
+<a name="line393"></a>    protected function addBucketKeyData($bucket, $key, $data = null) {
+<a name="line394"></a>        if ('bucket' == $this->inputMode) {
+<a name="line395"></a>            throw new \Exception('Already added a bucket, can\'t add an object.');
+<a name="line396"></a>        }
+<a name="line397"></a>
+<a name="line398"></a>        $this->inputs[] = array($bucket, $key, $data);
+<a name="line399"></a>
+<a name="line400"></a>        return $this;
+<a name="line401"></a>    }
+<a name="line402"></a>
+<a name="line403"></a>    // }}}
+<a name="line404"></a>}
+<a name="line405"></a></pre>
+<div class="header">
+<h1>Riak PHP 5.3.x client</h1>
+<ul>
+<li><a href="../overview-summary.html">Overview</a></li>
+<li>Package</li><li>Class</li><li>Tree</li><li><a href="../overview-files.html">Files</a></li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+<li><a href="../todo-list.html">Todo</a></li>
+<li><a href="../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../index.html" target="_top">Frames</a>
+<a href="../source/mapreduce.php.html" target="_top">No frames</a>
+</div>
+<hr>
+
+<p id="footer">This document was generated by <a href="http://peej.github.com/phpdoctor/">PHPDoctor: The PHP Documentation Creator</a></p>
+
+</body>
+
+</html>
