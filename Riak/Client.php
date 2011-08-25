@@ -15,9 +15,9 @@
 namespace Riak;
 
 /**
- * The RiakClient object holds information necessary to connect to
+ * The \Riak\Client object holds information necessary to connect to
  * Riak. The Riak API uses HTTP, so there is no persistent
- * connection, and the RiakClient object is extremely lightweight.
+ * connection, and the \Riak\Client object is extremely lightweight.
  * 
  * @since 1.0.0
  */
@@ -64,7 +64,7 @@ class Client
     protected $clientid;
 
     /**
-     * R-value setting for this RiakClient
+     * R-value setting for this \Riak\Client
      * 
      * @var   integer
      * @since 1.0.0
@@ -72,7 +72,7 @@ class Client
     protected $r = 2;
 
     /**
-     * W-value setting for this RiakClient
+     * W-value setting for this \Riak\Client
      * 
      * @var   integer
      * @since 1.0.0
@@ -154,7 +154,7 @@ class Client
     // {{{ Service properties getters / setters
 
     /**
-     * Get the R-value setting for this RiakClient.
+     * Get the R-value setting for this \Riak\Client.
      * 
      * @return integer
      * @since  1.0.0
@@ -165,10 +165,10 @@ class Client
     }
 
     /**
-     * Set the R-value for this RiakClient. This value will be used
+     * Set the R-value for this \Riak\Client. This value will be used
      * for any calls to get(...) or getBinary(...) where where 1) no
      * R-value is specified in the method call and 2) no R-value has
-     * been set in the RiakBucket.
+     * been set in the \Riak\Bucket.
      * 
      * @param integer $r The R value
      *  
@@ -183,7 +183,7 @@ class Client
     }
 
     /**
-     * Get the W-value setting for this RiakClient
+     * Get the W-value setting for this \Riak\Client
      * 
      * @return integer
      * @since  1.0.0
@@ -194,7 +194,7 @@ class Client
     }
 
     /**
-     * Set the W-value for this RiakClient. See setR(...) for a
+     * Set the W-value for this \Riak\Client. See setR(...) for a
      * description of how these values are used.
      * 
      * @param integer $w The W value
@@ -221,7 +221,7 @@ class Client
     }
 
     /**
-     * Set the DW-value for this RiakClient. See setR(...) for a
+     * Set the DW-value for this \Riak\Client. See setR(...) for a
      * description of how these values are used.
      * 
      * @param integer $dw The DW value
@@ -237,7 +237,7 @@ class Client
     }
 
     /**
-     * Get the clientID for this RiakClient.
+     * Get the clientID for this \Riak\Client.
      * 
      * @return string
      * @since  1.0.0
@@ -248,7 +248,7 @@ class Client
     }
 
     /**
-     * Set the clientID for this RiakClient. Should not be called
+     * Set the clientID for this \Riak\Client. Should not be called
      * unless you know what you are doing.
      * 
      * @param string $clientid The new clientID
@@ -268,7 +268,7 @@ class Client
     // {{{ Common routines
 
     /**
-     * Get the bucket by the specified name. Since buckets always exist, this will always return a RiakBucket.
+     * Get the bucket by the specified name. Since buckets always exist, this will always return a \Riak\Bucket.
      * 
      * @param string $name Bucket name
      *  
@@ -302,7 +302,7 @@ class Client
     }
 
     /**
-     * Check if the Riak server for this RiakClient is alive.
+     * Check if the Riak server for this \Riak\Client is alive.
      * 
      * @return boolea
      * @since  1.0.0

@@ -15,7 +15,7 @@
 namespace Riak;
 
 /**
- * The RiakBucket object allows you to access and change information
+ * The \Riak\Bucket object allows you to access and change information
  * about a Riak bucket, and provides methods to create or retrieve
  * objects within the bucket.
  * 
@@ -207,14 +207,6 @@ class Bucket
         return $obj;
     }
 
-  /**
-   * Create a new Riak object that will be stored as plain text/binary.
-   * @param  string $key - Name of the key.
-   * @param  object $data - The data to store.
-   * @param  string $content_type - The content type of the object. (default 'text/json')
-   * @return RiakObject
-   */
-
     /**
      * Create a new Riak object that will be stored as plain text/binary.
      * 
@@ -397,7 +389,7 @@ class Bucket
         $url = \Riak\Utils::buildRestPath($this->client, $this, null, array(), array('props' => 'true', 'keys' => 'false'));
         $response = \Riak\Utils::httpRequest('GET', $url);
 
-        // Use a RiakObject to interpret the response, we are just interested in the value.
+        // Use a \Riak\Object to interpret the response, we are just interested in the value.
         $obj = new \Riak\Object($this->client, $this, null);
         $obj->populate($response, array(200));
         if (!$obj->exists()) {
@@ -421,7 +413,7 @@ class Bucket
         $url = \Riak\Utils::buildRestPath($this->client, $this, null, array(), array('props' => 'false', 'keys' => 'true'));
         $response = \Riak\Utils::httpRequest('GET', $url);
 
-        // Use a RiakObject to interpret the response, we are just interested in the value.
+        // Use a \Riak\Object to interpret the response, we are just interested in the value.
         $obj = new \Riak\Object($this->client, $this, null);
         $obj->populate($response, array(200));
         if (!$obj->exists()) {

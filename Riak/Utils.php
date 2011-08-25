@@ -36,7 +36,7 @@ class Utils
     }
 
     /**
-     * Given a RiakClient, RiakBucket, Key, LinkSpec, and Params, construct and return a URL.
+     * Given a \Riak\Client, \Riak\Bucket, Key, LinkSpec, and Params, construct and return a URL.
      * 
      * @param \Riak\Client $client Client
      * @param \Riak\Bucket $bucket Bucket OPTIONAL
@@ -149,7 +149,7 @@ class Utils
             // Get the body...
             $responseBody = $responseBodyIO->contents();
 
-            // Return a new RiakResponse object.
+            // Return a new response object.
             $result = array($responseHeaders, $responseBody);
 
         } catch (\Exception $e) {

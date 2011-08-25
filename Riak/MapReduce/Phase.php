@@ -15,8 +15,8 @@
 namespace Riak\MapReduce;
 
 /**
- * The RiakMapReducePhase holds information about a Map phase or
- * Reduce phase in a RiakMapReduce operation.
+ * The \Riak\MapReduce\Phase holds information about a Map phase or
+ * Reduce phase in a \Riak\MapReduce operation.
  * 
  * @since 1.0.0
  */

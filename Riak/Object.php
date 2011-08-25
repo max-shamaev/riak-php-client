@@ -15,7 +15,7 @@
 namespace Riak;
 
 /**
- * The RiakObject holds meta information about a Riak object, plus the object's data.
+ * The \Riak\Object holds meta information about a Riak object, plus the object's data.
  * 
  * @since 1.0.0
  */
@@ -246,9 +246,9 @@ class Object
     }
 
     /**
-     * Add a link to a RiakObject.
+     * Add a link to a \Riak\Object.
      * 
-     * @param object $obj Either a RiakObject or a \Riak\Link object
+     * @param object $obj Either a \Riak\Object or a \Riak\Link object
      * @param string $tag Optional link tag. (default is bucket name, ignored if $obj is a \Riak\Link object.) OPTIONAL
      *  
      * @return \Riak\Object
@@ -264,9 +264,9 @@ class Object
     }
 
     /**
-     * Remove a link to a RiakObject. 
+     * Remove a link to a \Riak\Object. 
      * 
-     * @param object $obj Either a RiakObject or a \Riak\Link object
+     * @param object $obj Either a \Riak\Object or a \Riak\Link object
      * @param string $tag Optional link tag. (default is bucket name, ignored if $obj is a \Riak\Link object.) OPTIONAL
      *  
      * @return \Riak\Object

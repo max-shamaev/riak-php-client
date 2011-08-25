@@ -15,7 +15,7 @@
 namespace Riak;
 
 /**
- * The \Riak\Link object represents a link from one Riak object to another.
+ * The \Riak\Link object represents a link from one object to another.
  * 
  * @since 1.0.0
  */
@@ -62,12 +62,6 @@ class Link
         $this->tag = $tag;
         $this->client = null;
     }
-
-  /**
-   * Retrieve the RiakObject to which this link points.
-   * @param integer $r - The R-value to use.
-   * @return RiakObject
-   */
 
     /**
      * Retrieve the \Riak\Object to which this link points.

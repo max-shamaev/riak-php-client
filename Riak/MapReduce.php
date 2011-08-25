@@ -15,7 +15,7 @@
 namespace Riak;
 
 /**
- * The RiakMapReduce object allows you to build up and run a map/reduce operation on Riak.
+ * The \Riak\MapReduce object allows you to build up and run a map/reduce operation on Riak.
  * 
  * @since 1.0.0
  */
@@ -79,7 +79,7 @@ class MapReduce
     /**
      * Add inputs to a map/reduce operation. This method takes three
      * different forms, depending on the provided inputs. You can
-     * specify either  a RiakObject, a string bucket name, or a bucket,
+     * specify either  a \Riak\Object, a string bucket name, or a bucket,
      * key, and additional argument.
      * 
      * @param \Riak\Object|\Riak\Bucket $arg1 Riak object or bucket
