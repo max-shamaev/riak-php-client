@@ -367,15 +367,15 @@ class MapReduce
     /**
      * Add bucket 
      * 
-     * @param \Riak\Bucket $bucket Bucket
+     * @param string|\Riak\Bucket $bucket Bucket name or bucket
      *  
      * @return \Riak\MapReduce
      * @since  1.0.0
      */
-    protected function addBucket(\Riak\Bucket $bucket)
+    protected function addBucket($bucket)
     {
         $this->inputMode = 'bucket';
-        $this->inputs = $bucket;
+        $this->inputs = (is_object($bucket) && $bucket instanceof \Riak\Bucket) ? $bucket->getName() : $bucket;
 
         return $this;
     }

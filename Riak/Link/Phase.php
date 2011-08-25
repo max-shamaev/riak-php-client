@@ -15,7 +15,7 @@
 namespace Riak\Link;
 
 /**
- * The RiakLinkPhase object holds information about a Link phase in a map/reduce operation.
+ * The \Riak\Link\Phase object holds information about a Link phase in a map/reduce operation.
  * 
  * @since 1.0.0
  */
@@ -62,6 +62,29 @@ class Phase
         $this->keep = $keep;
     }
 
+    /**
+     * Get 'keep' property value 
+     * 
+     * @return boolean
+     * @since  1.0.0
+     */
+    public function getKeep()
+    {
+        return $this->keep;
+    }
+
+    /**
+     * Set 'keep' property
+     * 
+     * @param boolean $keep New 'kepp' value
+     *  
+     * @return void
+     * @since  1.0.0
+     */
+    public function setKeep($keep)
+    {
+        $this->keep = $keep;
+    }
     /**
      * Convert the object to an associative array. Used internally. 
      * 

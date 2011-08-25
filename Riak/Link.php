@@ -15,7 +15,7 @@
 namespace Riak;
 
 /**
- * The RiakLink object represents a link from one Riak object to another.
+ * The \Riak\Link object represents a link from one Riak object to another.
  * 
  * @since 1.0.0
  */
@@ -183,7 +183,7 @@ class Link
     public function toLinkHeader(\Riak\Client $client)
     {
         return '</' .
-            $client->prefix . '/' .
+            $client->getPrefix() . '/' .
             urlencode($this->bucket) . '/' .
             urlencode($this->key) . '>; riaktag="' .
             urlencode($this->getTag()) . '"';

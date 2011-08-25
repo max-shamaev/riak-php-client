@@ -248,15 +248,15 @@ class Object
     /**
      * Add a link to a RiakObject.
      * 
-     * @param object $obj Either a RiakObject or a RiakLink object
-     * @param string $tag Optional link tag. (default is bucket name, ignored if $obj is a RiakLink object.) OPTIONAL
+     * @param object $obj Either a RiakObject or a \Riak\Link object
+     * @param string $tag Optional link tag. (default is bucket name, ignored if $obj is a \Riak\Link object.) OPTIONAL
      *  
      * @return \Riak\Object
      * @since  1.0.0
      */
     public function addLink($obj, $tag = null)
     {
-        $newlink = ($obj instanceof \Riak\Link) ? $obj : new \Riak\Link($obj->bucket->name, $obj->key, $tag);
+        $newlink = ($obj instanceof \Riak\Link) ? $obj : new \Riak\Link($obj->bucket->getName(), $obj->key, $tag);
         $this->removeLink($newlink);
         $this->links[] = $newlink;
 
@@ -266,15 +266,15 @@ class Object
     /**
      * Remove a link to a RiakObject. 
      * 
-     * @param object $obj Either a RiakObject or a RiakLink object
-     * @param string $tag Optional link tag. (default is bucket name, ignored if $obj is a RiakLink object.) OPTIONAL
+     * @param object $obj Either a RiakObject or a \Riak\Link object
+     * @param string $tag Optional link tag. (default is bucket name, ignored if $obj is a \Riak\Link object.) OPTIONAL
      *  
      * @return \Riak\Object
      * @since  1.0.0
      */
     public function removeLink($obj, $tag = null)
     {
-        $oldlink = ($obj instanceof \Riak\Link) ? $obj : new \Riak\Link($obj->bucket->name, $obj->key, $tag);
+        $oldlink = ($obj instanceof \Riak\Link) ? $obj : new \Riak\Link($obj->bucket->getName(), $obj->key, $tag);
 
         $a = array();
         foreach ($this->links as $link) {
@@ -289,7 +289,7 @@ class Object
     }
 
     /**
-     * Return an array of RiakLink objects.
+     * Return an array of \Riak\Link objects.
      * 
      * @return array
      * @since  1.0.0
@@ -481,7 +481,7 @@ class Object
     public function add()
     {
         $mr = new \Riak\MapReduce($this->client);
-        $mr->add($this->bucket->name, $this->key);
+        $mr->add($this->bucket->getName(), $this->key);
 
         return call_user_func_array(array($mr, 'add'), func_get_args());
     }
@@ -495,7 +495,7 @@ class Object
     public function link()
     {
         $mr = new \Riak\MapReduce($this->client);
-        $mr->add($this->bucket->name, $this->key);
+        $mr->add($this->bucket->getName(), $this->key);
 
         return call_user_func_array(array($mr, 'link'), func_get_args());
     }
@@ -509,7 +509,7 @@ class Object
     public function map()
     {
         $mr = new \Riak\MapReduce($this->client);
-        $mr->add($this->bucket->name, $this->key);
+        $mr->add($this->bucket->getName(), $this->key);
 
         return call_user_func_array(array($mr, 'map'), func_get_args());
     }
@@ -523,7 +523,7 @@ class Object
     public function reduce()
     {
         $mr = new \Riak\MapReduce($this->client);
-        $mr->add($this->bucket->name, $this->key);
+        $mr->add($this->bucket->getName(), $this->key);
 
         return call_user_func_array(array($mr, 'reduce'), func_get_args());
     }
@@ -646,7 +646,7 @@ class Object
     {
         foreach (explode(',', trim($linkHeaders)) as $linkHeader) {
             if (preg_match('/\<\/([^\/]+)\/([^\/]+)\/([^\/]+)\>; ?riaktag="([^"]+)"/S', trim($linkHeader), $matches)) {
-                $this->links[] = new RiakLink($matches[2], $matches[3], $matches[4]);
+                $this->links[] = new \Riak\Link($matches[2], $matches[3], $matches[4]);
             }
         }
 
